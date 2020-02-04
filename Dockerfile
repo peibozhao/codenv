@@ -52,9 +52,12 @@ RUN chmod u+w /etc/sudoers && \
       echo -e "\n${UserName}    ALL=(ALL:ALL) ALL" >> /etc/sudoers && \
       chmod u-w /etc/sudoers
 
-# update git
-RUN git config --global http.sslVerify false
-RUN git config --global http.postBuffer 1048576000
+# config git
+USER ${UserName}
+WORKDIR /home/${UserName}
+COPY --chown=${UserName}:${GroupName} gitconfig .gitconfig
+# RUN git config --global http.sslVerify false
+# RUN git config --global http.postBuffer 1048576000
 
 # install python
 USER root
