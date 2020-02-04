@@ -91,11 +91,17 @@ COPY --chown=${UserName}:${GroupName} init.vim .config/nvim/
 RUN nvim +"PlugInstall --sync" +qa
 COPY --chown=${UserName}:${GroupName} coc-settings.json .config/nvim/
  
-# intall oh-my-zsh oh-my-tmux
+# intall oh-my-zsh
 USER ${UserName}
 WORKDIR /home/${UserName}
 RUN git clone https://github.com/ohmyzsh/ohmyzsh
 RUN sh ohmyzsh/tools/install.sh
+COPY --chown=${UserName}:${GroupName} zshrc .
+RUN cat zshrc >> .zshrc && rm zshrc
+
+# install oh-my-tmux
+USER ${UserName}
+WORKDIR /home/${UserName}
 RUN git clone https://github.com/gpakosz/.tmux.git
 RUN ln -s -f .tmux/.tmux.conf
 COPY --chown=${UserName}:${GroupName} ${TmuxLocalFileName} .
