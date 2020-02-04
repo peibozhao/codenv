@@ -25,7 +25,7 @@ set nohlsearch
 set fillchars=vert:│
 "set splitbelow    " 把 preview window 弄到下面，总是颤抖
 "set completeopt=menu,preview
-colorscheme delek
+colorscheme darkblue
 highlight VertSplit cterm=NONE ctermfg=Green ctermbg=NONE " 分割线的样式
 highlight colorcolumn cterm=NONE ctermfg=NONE ctermbg=DarkGray " 行字符限制
 highlight OverLength ctermbg=Red ctermfg=white " 字符限制
