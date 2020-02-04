@@ -29,6 +29,7 @@ RUN apt install -yqq tmux
 RUN apt install -yqq clang
 RUN apt install -yqq clangd-9
 RUN ln -s `which clangd-9` /usr/local/bin/clangd
+RUN apt install -yqq clang-format
 
 Run apt install -yqq ack
 Run apt install -yqq ctags
