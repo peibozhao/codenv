@@ -130,7 +130,6 @@ Plug 'airblade/vim-gitgutter'
 Plug 'tpope/vim-fugitive'
 
 Plug 'Yggdroot/indentLine'
-Plug 'Yggdroot/hiPairs'
 
 call plug#end()
 
@@ -195,23 +194,6 @@ let g:ack_mappings = {
 " **************** PLUGIN indentLine
 let g:indentLine_fileType = ['python']
 
-
-" *************** PLUGIN hiPairs
-let g:hiPairs_hl_matchPair = { 'term'    : 'underline,italic',
-          \                    'cterm'   : 'NONE',
-          \                    'ctermfg' : '240',
-          \                    'ctermbg' : '226',
-          \                    'gui'     : 'italic',
-          \                    'guifg'   : 'White',
-          \                    'guibg'   : 'Yellow' }
-
-let g:hiPairs_hl_unmatchPair = { 'term'    : 'underline,italic',
-            \                    'cterm'   : 'NONE',
-            \                    'ctermfg' : 'NONE',
-            \                    'ctermbg' : 'NONE',
-            \                    'gui'     : 'italic',
-            \                    'guifg'   : 'NONE',
-            \                    'guibg'   : 'NONE' }
 
 " *************** PLUGIN Coc
 " if hidden is not set, TextEdit might fail.
