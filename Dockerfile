@@ -3,6 +3,7 @@ FROM ubuntu
 MAINTAINER peibo.zhao
 
 ENV DEBIAN_FRONTEND=noninteractive
+ENV LANG=C.UTF-8
 ARG MinicondaInstall=/usr/local/miniconda3
 ARG UserName=zpb
 ARG GroupName=users
