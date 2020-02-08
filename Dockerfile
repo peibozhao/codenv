@@ -77,6 +77,7 @@ RUN ln -s ${MinicondaInstall}/bin/python /usr/local/bin/python
 RUN ${MinicondaInstall}/bin/pip install --upgrade pip
 RUN ${MinicondaInstall}/bin/pip install -q opencv-python
 RUN ${MinicondaInstall}/bin/pip install -q mxnet
+RUN ${MinicondaInstall}/bin/pip install -q gluoncv
 RUN ${MinicondaInstall}/bin/pip install -q ipython
 
 # install neovim
