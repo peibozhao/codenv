@@ -28,6 +28,7 @@ RUN apt install -yqq zsh
 RUN apt install -yqq tmux
 RUN apt install -yqq graphviz
 RUN apt install -yqq doxygen
+RUN apt install -yqq openssh-server
 
 RUN apt install -yqq clang
 RUN apt install -yqq clangd-9
