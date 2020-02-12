@@ -111,6 +111,7 @@ Plug 'scrooloose/nerdcommenter'
 " Plug 'vim-scripts/repmo.vim'
 
 Plug 'vim-airline/vim-airline'
+Plug 'majutsushi/tagbar'
 
 Plug 'kassio/neoterm'
 
@@ -194,6 +195,8 @@ let g:ack_mappings = {
 " **************** PLUGIN indentLine
 let g:indentLine_fileType = ['python']
 
+" **************** PLUGIN indentLine
+let g:airline#extensions#tagbar#enabled = 1
 
 " *************** PLUGIN Coc
 " if hidden is not set, TextEdit might fail.
