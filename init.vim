@@ -195,8 +195,10 @@ let g:ack_mappings = {
 " **************** PLUGIN indentLine
 let g:indentLine_fileType = ['python']
 
-" **************** PLUGIN indentLine
+" **************** PLUGIN Tagbar
 let g:airline#extensions#tagbar#enabled = 1
+" let g:airline#extensions#tagbar#flags = 'p'
+nnoremap <leader>tf :TagbarCurrentTag p<CR>
 
 " *************** PLUGIN Coc
 " if hidden is not set, TextEdit might fail.
