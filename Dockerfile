@@ -80,6 +80,7 @@ RUN ${MinicondaInstall}/bin/pip install -q opencv-python
 RUN ${MinicondaInstall}/bin/pip install -q mxnet
 RUN ${MinicondaInstall}/bin/pip install -q gluoncv
 RUN ${MinicondaInstall}/bin/pip install -q ipython
+RUN ${MinicondaInstall}/bin/pip install -q jupyter jupyterlab
 
 # install neovim
 USER root
