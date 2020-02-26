@@ -4,9 +4,14 @@ MAINTAINER peibo.zhao
 
 ENV DEBIAN_FRONTEND=noninteractive
 ENV LANG=C.UTF-8
-ARG MinicondaInstall=/usr/local/miniconda3
+# create user name/group
 ARG UserName=zpb
 ARG GroupName=users
+# local miniconda installation
+ARG MinicondaInstall=/usr/local/miniconda3
+# local cmake installation
+ARG CMakeInstall=cmake-3.17.0-rc1-Linux-x86_64.sh
+# local tmux config file
 ARG TmuxLocalFileName=tmux.conf.local
 
 SHELL ["/bin/bash", "-c"]
@@ -18,10 +23,8 @@ RUN apt install -yqq libssl-dev
 RUN apt install -yqq libcurl4-openssl-dev
 RUN apt install -yqq build-essential
 RUN apt install -yqq gdb
-RUN apt install -yqq cmake
 RUN apt install -yqq wget
 RUN apt install -yqq curl
-RUN apt install -yqq git
 RUN apt install -yqq iputils-ping
 RUN apt install -yqq sudo
 RUN apt install -yqq zsh
@@ -57,12 +60,23 @@ RUN chmod u+w /etc/sudoers && \
       echo -e "\n${UserName}    ALL=(ALL:ALL) ALL" >> /etc/sudoers && \
       chmod u-w /etc/sudoers
 
-# config git
+# install and config git
+USER root
+WORKDIR /root
+RUN add-apt-repository -y ppa:git-core/ppa
+RUN apt update -y
+RUN apt install -yqq git
 USER ${UserName}
 WORKDIR /home/${UserName}
 COPY --chown=${UserName}:${GroupName} gitconfig .gitconfig
 # RUN git config --global http.sslVerify false
 # RUN git config --global http.postBuffer 1048576000
+
+# install cmake
+USER root
+WORKDIR /root
+COPY --chown=${UserName}:${GroupName} ${CMakeInstall} .
+RUN sh ${CMakeInstall} --skip-license --prefix=/usr/local
 
 # install python
 USER root
