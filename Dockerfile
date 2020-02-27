@@ -63,7 +63,8 @@ RUN chmod u+w /etc/sudoers && \
 # install and config git
 USER root
 WORKDIR /root
-RUN add-apt-repository -y ppa:git-core/ppa
+RUN apt install -yqq software-properties-common
+RUN apt-add-repository -y ppa:git-core/ppa
 RUN apt update -y
 RUN apt install -yqq git
 USER ${UserName}
