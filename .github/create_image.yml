@@ -1,0 +1,20 @@
+name: create image
+on:
+  push:
+    branches:
+    - master
+jobs:
+  create_image_job:
+    name: create image
+    runs-on: ubuntu-latest
+    steps:
+    - run: sudo apt update
+    - run: sudo apt install apt-transport-https ca-certificates curl software-properties-common
+    - run: curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
+    - run: sudo add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu bionic stable"
+    - run: sudo apt update
+    - run: apt-cache policy docker-ce
+    - run: sudo apt install docker-ce
+    - uses: actions/checkout@master
+    - run: docker build -t codenv:latest .
+    - run: docker images
