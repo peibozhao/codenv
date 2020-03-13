@@ -60,6 +60,11 @@ RUN chmod u+w /etc/sudoers && \
       echo -e "\n${UserName}    ALL=(ALL:ALL) ALL" >> /etc/sudoers && \
       chmod u-w /etc/sudoers
 
+# install proxychains and config
+USER root
+RUN apt install -yqq proxychains
+COPY proxychains.conf /etc/
+
 # install and config git
 USER root
 WORKDIR /root
