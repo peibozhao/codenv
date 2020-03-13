@@ -13,6 +13,8 @@ ARG MinicondaInstall=/usr/local/miniconda3
 ARG CMakeInstall=cmake-3.17.0-rc1-Linux-x86_64.sh
 # local tmux config file
 ARG TmuxLocalFileName=tmux.conf.local
+# local v2ray installation
+ARG V2rayLocalFileName=v2ray-linux-64.zip
 
 SHELL ["/bin/bash", "-c"]
 
@@ -137,3 +139,10 @@ RUN ln -s -f .tmux/.tmux.conf
 COPY --chown=${UserName}:${GroupName} ${TmuxLocalFileName} .
 RUN cat .tmux/.tmux.conf.local ${TmuxLocalFileName} > .tmux.conf.local
 RUN rm ${TmuxLocalFileName}
+
+# install v2ray, no config
+USER root
+WORKDIR /root
+RUN curl https://install.direct/go.sh -o go.sh
+COPY ${V2rayLocalFileName} .
+RUN go.sh --local ${V2rayLocalFileName}
