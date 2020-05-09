@@ -21,6 +21,7 @@ SHELL ["/bin/bash", "-c"]
 COPY sources.list /etc/apt/sources.list
 RUN cat /etc/apt/sources.list
 RUN apt update -y && apt upgrade -y
+RUN apt install -yqq aptitude
 RUN apt install -yqq libssl-dev
 RUN apt install -yqq libcurl4-openssl-dev
 RUN apt install -yqq build-essential
