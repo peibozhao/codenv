@@ -1,5 +1,5 @@
 # VERSION 0.0.1
-FROM ubuntu
+FROM ubuntu:18.04
 MAINTAINER peibo.zhao
 
 ENV DEBIAN_FRONTEND=noninteractive
