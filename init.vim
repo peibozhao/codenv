@@ -21,11 +21,13 @@ set autowrite " 切换buff自动保存
 set cursorline  " UI
 "hi cursorline cterm = NONE ctermbg = darkcyan ctermfg = black
 "hi cursorColumn cterm = NONE ctermbg = darkred ctermfg = white
+colorscheme darkblue
+nnoremap <leader>1 :colorscheme darkblue<CR>
+hi Quote ctermbg=109 guifg=#83a598
 set nohlsearch
 set fillchars=vert:│
 "set splitbelow    " 把 preview window 弄到下面，总是颤抖
 "set completeopt=menu,preview
-colorscheme darkblue
 highlight VertSplit cterm=NONE ctermfg=Green ctermbg=NONE " 分割线的样式
 highlight colorcolumn cterm=NONE ctermfg=NONE ctermbg=DarkGray " 行字符限制
 highlight OverLength ctermbg=Red ctermfg=white " 字符限制
@@ -39,7 +41,7 @@ highlight RedundantSpaces ctermbg=red guibg=red
 match RedundantSpaces /\s\+$\| \+\ze\t\|\t/
 " set colorcolumn=80
 " match OverLength /\%81v.\+/ " 80 字符限制
-cnoremap <C-A> <Home> " 命令行的按键映射
+cnoremap <C-A> <Home>
 cnoremap <C-F> <Right>
 cnoremap <C-B> <Left>
 cnoremap <Esc>b <S-Left>
@@ -60,18 +62,6 @@ if has("autocmd")  " 自动跳转到上次退出的位置
 endif
 " let g:loaded_python3_provider=0 " python 总是加载错误
 let g:python3_host_prog='/usr/local/miniconda3/bin/python' " 指定python3的执行程序
-
-
-" **************PLUGIN NERDTree
-let NERDChristmasTree = 1
-let NERDTreeAutoCenter = 1
-let NERDTreeMouseMode = 2
-let NERDTreeWinSize = 31
-let NERDTreeShowHidden=1
-let NERDTreeIgnore=['\.pyc', '\~$', '\.swp']
-let NERDTreeWinSize = 30
-nnoremap <silent> <leader>tr :NERDTreeToggle<CR>
-" au VimEnter * NERDTree " 自动打开
 
 
 " ***********PLUGIN project
@@ -99,11 +89,6 @@ Plug 'inkarkat/vim-mark'
 
 " Plug 'vim-scripts/ctrlp.vim'
 Plug 'Yggdroot/LeaderF'
-Plug 'junegunn/fzf', { 'do': './install --all' }
-Plug 'junegunn/fzf.vim'
-
-" Plug 'vim-scripts/The-NERD-tree', { 'on': 'NERDTreeToggle' }
-Plug 'scrooloose/nerdtree', { 'on': 'NERDTreeToggle' }
 
 Plug 'vim-scripts/DoxygenToolkit.vim'
 Plug 'scrooloose/nerdcommenter'
@@ -131,6 +116,8 @@ Plug 'airblade/vim-gitgutter'
 Plug 'tpope/vim-fugitive'
 
 Plug 'Yggdroot/indentLine'
+
+Plug 'Shougo/defx.nvim', { 'do': ':UpdateRemotePlugins' }
 
 call plug#end()
 
@@ -171,14 +158,8 @@ nnoremap <leader>cle O/***********************************************/<Esc>
 " 与mark.vim冲突
 " nnoremap <leader>mru :LeaderfMru<CR>
 nnoremap <leader>lf :LeaderfFunction<CR>
-
-" **************** PLUGIN fzf
-nnoremap <C-p> :Files<CR>
-nnoremap <C-b> :Buffers<CR>
-let g:fzf_action = {
-      \ 'ctrl-t': 'tab split',
-      \ 'ctrl-s': 'split',
-      \ 'ctrl-v': 'vsplit' }
+nnoremap <leader>lb :LeaderfBuffer<CR>
+nnoremap <C-p> :LeaderfFile<CR>
 
 " **************** PLUGIN Ack
 let g:ack_mappings = {
@@ -196,9 +177,16 @@ let g:ack_mappings = {
 let g:indentLine_fileType = ['python']
 
 " **************** PLUGIN Tagbar
+nnoremap <leader>tf :TagbarCurrentTag p<CR>
+
+" **************** PLUGIN Airline
 let g:airline#extensions#tagbar#enabled = 1
 " let g:airline#extensions#tagbar#flags = 'p'
-nnoremap <leader>tf :TagbarCurrentTag p<CR>
+" let g:airline#extensions#coc#enabled = 1
+" let airline#extensions#coc#error_symbol = 'E:'
+" let airline#extensions#coc#warn_symbol = 'W:'
+" let airline#extensions#coc#stl_format_err = '%E{[%e(#%fe)]}'
+" let airline#extensions#coc#stl_format_warn = '%W{[%w(#%fw)]}'
 
 " *************** PLUGIN Coc
 " if hidden is not set, TextEdit might fail.
@@ -330,3 +318,36 @@ nnoremap <silent> <leader>cn  :<C-u>CocNext<CR>
 nnoremap <silent> <leader>cp  :<C-u>CocPrev<CR>
 " Resume latest coc list
 nnoremap <silent> <leader>clr  :<C-u>CocListResume<CR>
+
+
+" Defx
+nnoremap <silent> <leader>tr :Defx<CR>
+call defx#custom#option('_', {
+      \ 'winwidth': 30,
+      \ 'split': 'vertical',
+      \ 'direction': 'botright',
+      \ 'show_ignored_files': 1,
+      \ 'buffer_name': '',
+      \ 'toggle': 1,
+      \ 'resume': 1
+      \ })
+
+autocmd FileType defx call s:defx_mappings()
+
+function! s:defx_mappings() abort
+  " nnoremap <silent><buffer><expr> o     defx#do_action('open')
+  nnoremap <silent><buffer><expr> o     <SID>defx_toggle_tree()
+  nnoremap <silent><buffer><expr> s     defx#do_action('drop', 'vsplit')
+  nnoremap <silent><buffer><expr> S     defx#do_action('drop', 'split')
+  nnoremap <silent><buffer><expr> m     defx#do_action('rename')
+  nnoremap <silent><buffer><expr> d     defx#do_action('remove')
+  nnoremap <silent><buffer><expr> c     defx#do_action('new_file')
+  nnoremap <silent><buffer><expr> C     defx#do_action('new_directory')
+endfunction
+
+function! s:defx_toggle_tree() abort
+  if defx#is_directory()
+    return defx#do_action('open_or_close_tree')
+  endif
+  return defx#do_action('multi', ['drop'])
+endfunction
