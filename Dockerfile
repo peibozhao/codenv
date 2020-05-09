@@ -144,4 +144,4 @@ USER root
 WORKDIR /root
 RUN curl https://install.direct/go.sh -o go.sh
 COPY ${V2rayLocalFileName} .
-RUN ./go.sh --local ${V2rayLocalFileName}
+RUN sh go.sh --local ${V2rayLocalFileName}
